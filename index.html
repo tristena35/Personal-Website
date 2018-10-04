@@ -48,6 +48,32 @@
         #brad{
         height:275px; 
         }  
+		
+		input[type=text], select {
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		display: inline-block;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
+		}
+
+		input[type=button] {
+			width: 100%;
+			background-color: #4CAF50;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		input[type=button]:hover {
+			background-color: #45a049;
+		}
+		
        
 	</style>
 
@@ -59,6 +85,40 @@
     			alert("Not available yet.");
 		}
 
+	</script>
+	
+	<script>
+	
+	function sendInfo(){
+	
+		// Get a reference to the database service
+		
+		// Get a reference to the database service
+		var firebaseRef = firebase.database().ref();
+		
+		// Getting Values to provide to function
+		var fname = document.getElementById("fname").value
+		var lname = document.getElementById("lname").value
+		var email = document.getElementById("email").value
+		var question = document.getElementById("question").value
+		var gender = document.getElementById("gender").value
+		
+		if(fname == null || lname == null || email == null || question == null){
+			alert("Make sure all fields have been filled out!");
+			return;
+		}
+		
+		var pushChild = firebaseRef.child("Questions").push();
+
+		pushChild.child("firstName").set(fname);
+		pushChild.child("lastName").set(lname);
+		pushChild.child("email").set(email);
+		pushChild.child("question").set(question);
+		pushChild.child("gender").set(gender);
+		
+		alert("Your question has been sent!");
+				
+	}
 	</script>
 
 </head>
@@ -93,11 +153,14 @@
                     <li>
                         <a class="page-scroll" href="#friendFamily">Friends and Family</a>
                     </li>
+                    <li>
+                        <a class="page-scroll" href="#footer">Questions</a>
+                    </li>
 					<li>
                         <a class="page-scroll" href="http://www.qc.cuny.edu/Pages/home.aspx" target="_blank">Queens College</a>
                     </li>
 					<li>
-                        <a class="page-scroll" href="Tristen Aguilar RESUME.pdf" target="_blank">My Resume</a>
+                        <a class="page-scroll" href="Tristen Aguilar Resume.pdf" target="_blank">My Resume</a>
                     </li>
                 </ul>
             </div>
@@ -116,7 +179,9 @@
                 <a href="#hobbies" class="page-scroll btn btn-xl">Start Exploring!</a>
             </div>
         </div>
+      <!-- This line Below plays the Man of Steel Instrumental, but I took it out for now 
 		<embed src="Man of Steel OST - theme.mp3" autostart="true" loop="true" width="2" height="0">
+	  -->
     </header>
 
     <!-- Hobbies Section -->
@@ -318,9 +383,47 @@
 
     <footer>
         <div class="container" id= "footer">
+		<br><br>
+		<div id = "questionArea">
+		<!------------ QUESTIONS SECTION ------------>
+			
+			<h1 style="text-decoration:underline"> Questions! </h1>
+			
+			<br>
+		
+			<div id = "QuestionsSection">
+				<label for="fname">First Name</label>
+				<input type="text" id="fname" name="firstname" placeholder="Your first name..">
+			
+				<label for="lname">Last Name</label>
+				<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+			
+				<label for="question">Got a Question?</label>
+				<input type="text" id="question" name="lastname" placeholder="Any Questions?">
+			
+				<label for="gender">Gender</label>
+					<select id="gender" name="country">
+					<option value="male">Male</option>
+					<option value="female">Female</option>
+					<option value="other">Other</option>
+					</select>
+				
+				<label for="email">Email</label>
+				<input type="text" id="email" name="email" placeholder="I'll get back to you!">
+				
+				<br>
+				
+				<input type="button" value="Submit" onclick = "sendInfo()">
+				
+			</div>
+		</div>
+		<br><br>
+		
+		<hr>
+		
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; TristenAguilar 2017</span>
+                    <span class="copyright">Copyright &copy; TristenAguilar 2018</span>
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline social-buttons">
@@ -344,6 +447,20 @@
         </div>
     </footer>
 
+	<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+	<script>
+	// Initialize Firebase
+	var config = {
+		apiKey: "AIzaSyA-VOOCDEvBV4_9J3MyC-WPfjppLJBuo5U",
+		authDomain: "personalwebsite-b23a6.firebaseapp.com",
+		databaseURL: "https://personalwebsite-b23a6.firebaseio.com",
+		projectId: "personalwebsite-b23a6",
+		storageBucket: "",
+		messagingSenderId: "278570825613"
+	};
+	firebase.initializeApp(config);
+</script>
+	
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 
